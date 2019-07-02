@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
-        <file>qml/Grid.qml</file>
+        <file>qml/Flex.qml</file>
     </qresource>
 </RCC>

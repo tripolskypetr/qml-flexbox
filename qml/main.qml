@@ -4,7 +4,7 @@ import "qrc:/qml"
 
 Window {
     visible: true
-    Grid {
+    Flex {
         anchors.fill: parent
         columnDefenition : ["auto", "1fr", "auto"]
         rowDefenition: ["auto", "1fr", "auto"]
