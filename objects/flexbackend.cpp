@@ -32,6 +32,17 @@ QVariant FlexBackend::createNode(QVariant config) {
 
 /*---------------------------------------------------------------------------*/
 
+void FlexBackend::collectGarbage(QVariant rootNode) {
+    FlexNode* node = qvariant_cast<FlexNode*>(rootNode);
+    if (node==nullptr) {
+        qCritical() << "FlexBackend collectGarbage node to FlexNode*";
+    } else {
+        node->deleteLater();
+    }
+}
+
+/*---------------------------------------------------------------------------*/
+
 QVariant FlexBackend::createConfig() {
     return QVariant::fromValue(new FlexConfig(this));
 }

@@ -43,6 +43,7 @@ void FlexNode::appendChildren(QVariant children) {
                 qCritical() << "FlexNode appendChildren child is not qobject";
                 return;
             } else {
+                node->setParent(this);
                 tmp.push_back(node->getNode());
             }
         }

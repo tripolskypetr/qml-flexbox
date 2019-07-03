@@ -4,18 +4,11 @@ import "qrc:/qml"
 
 Window {
     visible: true
-    Rectangle {
-        color: "green"
-        height: 200
-        width: 200
-        Flex {
-            alignSelf: "center"
-            justifyContent: "center"
-            height: 200
-            width: 200
-            Text { height: 15; width: 15; text: "1" }
-        }
+    Flex {
+        height: parent.height
+        width: parent.width
+        alignSelf: "center"
+        justifyContent: "center"
+        Text { height: 15; width: 15; text: "1" }
     }
-
-
 }

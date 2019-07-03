@@ -18,18 +18,6 @@ namespace Objects {
 
 /*****************************************************************************/
 
-/*namespace FlexEnums {
-    Q_NAMESPACE
-    enum FlexDirection {
-        FlexDirectionColumn,
-        FlexDirectionColumnReverse,
-        FlexDirectionRow,
-        FlexDirectionRowReverse
-    };
-}*/
-
-/*****************************************************************************/
-
 class FlexBackend : public QObject {
   Q_OBJECT
   private:
@@ -41,6 +29,7 @@ class FlexBackend : public QObject {
     QVariant createConfig();
     QVariant createNode();
     QVariant createNode(QVariant config);
+    void collectGarbage(QVariant rootNode);
 };
 
 /*****************************************************************************/

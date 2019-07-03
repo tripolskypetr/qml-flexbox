@@ -269,46 +269,39 @@ Item {
     }
 
     function updatePositions() {
-
-        var rootNode = backend.createNode();
-        processNode(flex, rootNode);
-
-        var nodes = []
-        var node = {}
-        var child = {}
-        var i = 0;
-
-        for (i=0;i!==flex.children.length;i++) {
-            node = backend.createNode();
-            child = flex.children[i];
-            if (isFlex(child)) {
-                processNode(child, node);
-            } else {
-                setDefaultNodeProps(child, node);
+        if (flex.height!=0&&flex.width!=0) {
+            var rootNode = backend.createNode();
+            processNode(flex, rootNode);
+            var nodes = []
+            var node = {}
+            var child = {}
+            var i = 0;
+            for (i=0;i!==flex.children.length;i++) {
+                node = backend.createNode();
+                child = flex.children[i];
+                if (isFlex(child)) {
+                    processNode(child, node);
+                } else {
+                    setDefaultNodeProps(child, node);
+                }
+                nodes.push(node);
             }
-            nodes.push(node);
+            rootNode.appendChildren(nodes);
+            rootNode.calculateLayoutLtr(flex.width, flex.height);
+            /* console.log(JSON.stringify({root: rootNode})); */
+            for (i=0;i!==flex.children.length;i++) {
+                node = nodes[i];
+                flex.children[i].x = node.getLayoutLeft();
+                flex.children[i].y = node.getLayoutTop();
+                flex.children[i].width = node.getLayoutWidth();
+                flex.children[i].height = node.getLayoutHeight();
+                /* console.log(JSON.stringify(node)); */
+            }
+            backend.collectGarbage(rootNode);
+            return true;
+        } else {
+            return false;
         }
-
-        rootNode.appendChildren(nodes);
-        rootNode.calculateLayoutLtr(flex.width, flex.height);
-
-        console.log(JSON.stringify({root: rootNode}));
-
-        for (i=0;i!==flex.children.length;i++) {
-            node = nodes[i];
-            flex.children[i].x = node.getLayoutLeft();
-            flex.children[i].y = node.getLayoutTop();
-            flex.children[i].width = node.getLayoutWidth();
-            flex.children[i].height = node.getLayoutHeight();
-            console.log(JSON.stringify(node));
-        }
-
-        /*int getLayoutTop();
-        int getLayoutLeft();
-        int getLayoutRight();
-        int getLayoutWidth();
-        int getLayoutBottom();
-        int getLayoutHeight();*/
     }
 
     onChildrenChanged: updatePositions();
