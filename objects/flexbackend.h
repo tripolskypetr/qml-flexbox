@@ -4,6 +4,7 @@
 #include <QtDebug>
 #include <QObject>
 #include <QVariant>
+#include <QQmlContext>
 
 #include "objects/flex/flexconfig.h"
 #include "objects/flex/flexnode.h"

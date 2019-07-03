@@ -3,6 +3,7 @@
 
 #include <QtDebug>
 #include <QObject>
+#include <QVariant>
 #include <QSharedPointer>
 
 #include "objects/flex/flexconfig.h"
@@ -16,6 +17,7 @@ namespace Flex {
 
 class FlexNode : public QObject {
   Q_OBJECT
+  Q_PROPERTY(int flexGrow READ getFlexGrow WRITE setFlexGrow)
   private:
     YGNodeRef node;
     FlexConfig* config;
@@ -24,18 +26,26 @@ class FlexNode : public QObject {
     virtual ~FlexNode();
     YGNodeRef getNode();
   public slots:
-    void setChildren(FlexNode* node);
-    void removeChildren(FlexNode* node);
+    /* child */
+    void setChildren(QVariant node);
+    void removeChildren(QVariant node);
+    /* flex */
+    int getFlexGrow();
+    int getFlexShrink();
     void setFlexGrow(int v);
     void setFlexShrink(int v);
     /* height */
     void setHeightAuto();
     void setHeight(int point);
+    void setMinHeight(int point);
     void setHeightPercent(int percent);
+    void setMinHeightPercent(int percent);
     /* width */
     void setWidthAuto();
     void setWidth(int point);
+    void setMinWidth(int point);
     void setWidthPercent(int percent);
+    void setMinWidthPercent(int percent);
     /* display */
     void setDisplayNone();
     void setDisplayFlex();
@@ -60,7 +70,7 @@ class FlexNode : public QObject {
     void setAlignContentFlexStart();
     void setAlignContentSpaceAround();
     void setAlignContentSpaceBetween();
-    /* align items */
+    /* align-items */
     void setAlignItemsAuto();
     void setAlignItemsCenter();
     void setAlignItemsFlexEnd();
@@ -82,10 +92,33 @@ class FlexNode : public QObject {
     void setWrap();
     void setNoWrap();
     void setWrapReverser();
-
-
-
-
+    /* margin */
+    void setMarginTop(int point);
+    void setMarginLeft(int point);
+    void setMarginRight(int point);
+    void setMarginBottom(int point);
+    void setMarginTopPercent(int percent);
+    void setMarginLeftPercent(int percent);
+    void setMarginRightPercent(int percent);
+    void setMarginBottomPercent(int percent);
+    /* padding */
+    void setPaddingTop(int point);
+    void setPaddingLeft(int point);
+    void setPaddingRight(int point);
+    void setPaddingBottom(int point);
+    void setPaddingTopPercent(int percent);
+    void setPaddingLeftPercent(int percent);
+    void setPaddingRightPercent(int percent);
+    void setPaddingBottomPercent(int percent);
+    /* calculate */
+    int getTop();
+    int getLeft();
+    int getRight();
+    int getWidth();
+    int getBottom();
+    int getHeight();
+    void calculateLayoutRtl(int width, int height);
+    void calculateLayoutLtr(int width, int height);
 };
 
 /*****************************************************************************/

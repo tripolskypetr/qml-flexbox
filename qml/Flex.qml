@@ -8,18 +8,24 @@ Item {
     property var rowDefenition: []
     onChildrenChanged: updatePositions();
 
-    FlexBackend{id: backend}
+    FlexBackend{ id: backend }
 
     function updatePositions() {
+
+        //var rootNode = backend.createNode();
+
         for (var i = 0; i < grid.children.length; ++i) {
+
+            //var node = backend.createNode();
+
             grid.children[i].x = i*50;
             grid.children[i].y = i*60;
         }
     }
 
     Component.onCompleted: {
-        var config = backend.createConfig();
-        var node = backend.createNode(config);
-        backend.createNode(1);
+        var node = backend.createNode();
+        node.flexGrow=1488;
+        console.log(JSON.stringify(node))
     }
 }
