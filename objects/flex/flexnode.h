@@ -4,6 +4,7 @@
 #include <QtDebug>
 #include <QObject>
 #include <QVariant>
+#include <QLinkedList>
 #include <QSharedPointer>
 
 #include "objects/flex/flexconfig.h"
@@ -33,7 +34,7 @@ class FlexNode : public QObject {
 
   Q_PROPERTY(int paddingTop READ getPaddingTop WRITE setPaddingTop)
   Q_PROPERTY(int paddingLeft READ getPaddingLeft WRITE setPaddingLeft)
-  Q_PROPERTY(int paddingRight READ setPaddingRight WRITE setPaddingRight)
+  Q_PROPERTY(int paddingRight READ getPaddingRight WRITE setPaddingRight)
   Q_PROPERTY(int paddingBottom READ getPaddingBottom WRITE setPaddingBottom)
 
   Q_PROPERTY(int layoutTop READ getLayoutTop)
@@ -44,14 +45,14 @@ class FlexNode : public QObject {
   private:
     YGNodeRef node;
     FlexConfig* config;
+    QLinkedList<FlexNode*> child;
   public:
     FlexNode(FlexConfig* config, QObject* parent = nullptr);
     virtual ~FlexNode();
     YGNodeRef getNode();
   public slots:
     /* child */
-    Q_INVOKABLE void setChildren(QVariant node);
-    Q_INVOKABLE void removeChildren(QVariant node);
+    Q_INVOKABLE void appendChildren(QVariant node);
     /* flex */
     int getFlexGrow();
     int getFlexShrink();

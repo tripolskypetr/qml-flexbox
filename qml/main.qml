@@ -6,11 +6,6 @@ Window {
     visible: true
     Flex {
         anchors.fill: parent
-        columnDefenition : ["auto", "1fr", "auto"]
-        rowDefenition: ["auto", "1fr", "auto"]
-        Text { text: "1"; }
-        Text { text: "1"; }
-        Text { text: "1"; }
-        Text { text: "1"; }
+        Text { text: "1" }
     }
 }

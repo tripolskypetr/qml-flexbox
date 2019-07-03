@@ -28,26 +28,19 @@ YGNodeRef FlexNode::getNode() {
 
 /*---------------------------------------------------------------------------*/
 
-void FlexNode::setChildren(QVariant node) {
+void FlexNode::appendChildren(QVariant node) {
     FlexNode* object = qvariant_cast<FlexNode*>(node);
+    std::vector<YGNodeRef> tmp;
     if (object==nullptr) {
         qCritical() << "FlexNode setChildren child not flexnode*";
     } else {
-        object->setParent(this);
-        std::vector<YGNodeRef> child = { object->getNode() };
-        YGNodeSetChildren(this->node,child);
-    }
-}
-
-/*---------------------------------------------------------------------------*/
-
-void FlexNode::removeChildren(QVariant node) {
-    FlexNode* object = qvariant_cast<FlexNode*>(node);
-    if (object==nullptr) {
-        qCritical() << "FlexNode removeChildren child not flexnode*";
-    } else {
-        object->setParent(nullptr);
-        YGNodeRemoveChild(this->node, object->getNode());
+        child.append(object);
+        QLinkedList<FlexNode*>::iterator i;
+        for (i = child.begin(); i != child.end(); i++) {
+            FlexNode* it = (*i);
+            tmp.push_back(it->getNode());
+        }
+        YGNodeSetChildren(this->node,tmp);
     }
 }
 

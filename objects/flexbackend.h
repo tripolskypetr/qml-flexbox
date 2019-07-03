@@ -18,6 +18,23 @@ namespace Objects {
 
 /*****************************************************************************/
 
+/*namespace FlexEnums {
+    Q_NAMESPACE
+    enum Wrap {
+        NoWrap,
+        Wrap,
+        WrapReverse
+    };
+    enum FlexDirection {
+        FlexDirectionColumn,
+        FlexDirectionColumnReverse,
+        FlexDirectionRow,
+        FlexDirectionRowReverse
+    };
+}*/
+
+/*****************************************************************************/
+
 class FlexBackend : public QObject {
   Q_OBJECT
   private:
