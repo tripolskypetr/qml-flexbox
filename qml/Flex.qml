@@ -26,6 +26,8 @@ Item {
     Component.onCompleted: {
         var node = backend.createNode();
         node.flexGrow=1488;
+        node.height = 14;
+        node.setDisplayFlex();
         console.log(JSON.stringify(node))
     }
 }
