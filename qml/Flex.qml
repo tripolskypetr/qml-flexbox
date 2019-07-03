@@ -31,6 +31,8 @@ Item {
 
     property string flexWrap: "noWrap"
 
+    property string flexDirection: "row"
+
     FlexBackend{ id: backend }
 
     function isFlex(child) {
@@ -70,7 +72,9 @@ Item {
             return false;
         } else if (typeof child.flexWrap === 'undefined') {
             return false;
-        }  else {
+        } else if (typeof child.flexDirection === 'undefined') {
+            return false;
+        }   else {
             return true;
         }
     }
@@ -155,7 +159,7 @@ Item {
         }
     }
 
-    function setJustifyContent(child, node){
+    function setJustifyContent(child, node) {
         var justify = child.justifyContent;
         if (justify==="center") {
             node.setJustifyCenter();
@@ -174,7 +178,7 @@ Item {
         }
     }
 
-    function setFlexWrap(child, node){
+    function setFlexWrap(child, node) {
         var wrap = child.flexWrap;
         if (wrap==="wrap") {
             node.setWrap();
@@ -187,34 +191,127 @@ Item {
         }
     }
 
-    function updatePositions() {
-
-        var rootNode = backend.createNode();
-        var childs = []
-        var nodes = []
-
-        for (var i = 0; i < flex.children.length; ++i) {
-            var node = backend.createNode();
-            var child = flex.children[i];
-            if (isFlex(child)) {
-                setJustifyContent(child, node);
-                setAlignContent(child, node);
-                setAlignItems(child, node);
-                setAlignSelf(child, node);
-                setFlexWrap(child, node);
-                setDisplay(child, node);
-            } else {
-                node.height = child.height;
-                node.width = child.width;
-            }
-            childs.push(child);
-            nodes.push(node);
-            rootNode.appendChildren(node);
-            //grid.children[i].x = i*50;
-            //grid.children[i].y = i*60;
+    function setFlexDirection(child, node) {
+        var direction = child.flexDirection;
+        if (direction==="row") {
+            node.setFlexDirectionRow();
+        } else if (direction==="column") {
+            node.setFlexDirectionColumn();
+        } else if (direction==="rowReverse") {
+            node.setFlexDirectionRowReverse();
+        } else if (direction==="columnReverse") {
+            node.setFlexDirectionColumnReverse();
+        } else {
+            debugger;
         }
     }
 
-    Component.onCompleted: updatePositions();
+    function setOtherNodeProps(child, node) {
+        node.minHeight = child.minHeight;
+        node.minWidth = child.minWidth;
+        node.flexShrink = child.flexShrink;
+        node.flexGrow = child.flexGrow;
+
+        node.marginTop = child.marginTop;
+        node.marginLeft = child.marginLeft;
+        node.marginRight = child.marginRight;
+        node.marginBottom = child.marginBottom;
+
+        node.paddingTop = child.paddingTop;
+        node.paddingLeft = child.paddingLeft;
+        node.paddingRight = child.paddingRight;
+        node.paddingBottom = child.paddingBottom;
+
+        node.height = child.height;
+        node.width = child.width;
+    }
+
+    function setDefaultNodeProps(child, node) {
+        node.minHeight = 9999;
+        node.minWidth = 0;
+        node.flexShrink = 0;
+        node.flexGrow = 0;
+
+        node.marginTop = 0;
+        node.marginLeft = 0;
+        node.marginRight = 0;
+        node.marginBottom = 0;
+
+        node.paddingTop = 0;
+        node.paddingLeft = 0;
+        node.paddingRight = 0;
+        node.paddingBottom = 0;
+
+        node.height = child.height;
+        node.width = child.width;
+
+        node.setDisplayFlex();
+
+        node.setAlignSelfAuto();
+        node.setAlignItemsAuto();
+        node.setAlignContentAuto();
+
+        node.setJustifySpaceBetween();
+        node.setNoWrap();
+
+        node.setFlexDirectionRow();
+    }
+
+    function processNode(child, node) {
+        setOtherNodeProps(child, node, true);
+        setJustifyContent(child, node);
+        setFlexDirection(child, node);
+        setAlignContent(child, node);
+        setAlignItems(child, node);
+        setAlignSelf(child, node);
+        setFlexWrap(child, node);
+        setDisplay(child, node);
+    }
+
+    function updatePositions() {
+
+        var rootNode = backend.createNode();
+        processNode(flex, rootNode);
+
+        var nodes = []
+        var node = {}
+        var child = {}
+        var i = 0;
+
+        for (i=0;i!==flex.children.length;i++) {
+            node = backend.createNode();
+            child = flex.children[i];
+            if (isFlex(child)) {
+                processNode(child, node);
+            } else {
+                setDefaultNodeProps(child, node);
+            }
+            nodes.push(node);
+        }
+
+        rootNode.appendChildren(nodes);
+        rootNode.calculateLayoutLtr(flex.width, flex.height);
+
+        console.log(JSON.stringify({root: rootNode}));
+
+        for (i=0;i!==flex.children.length;i++) {
+            node = nodes[i];
+            flex.children[i].x = node.getLayoutLeft();
+            flex.children[i].y = node.getLayoutTop();
+            flex.children[i].width = node.getLayoutWidth();
+            flex.children[i].height = node.getLayoutHeight();
+            console.log(JSON.stringify(node));
+        }
+
+        /*int getLayoutTop();
+        int getLayoutLeft();
+        int getLayoutRight();
+        int getLayoutWidth();
+        int getLayoutBottom();
+        int getLayoutHeight();*/
+    }
+
     onChildrenChanged: updatePositions();
+    onWidthChanged: updatePositions();
+    onHeightChanged: updatePositions();
 }

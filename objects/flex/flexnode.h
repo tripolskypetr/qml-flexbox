@@ -4,8 +4,7 @@
 #include <QtDebug>
 #include <QObject>
 #include <QVariant>
-#include <QLinkedList>
-#include <QSharedPointer>
+#include <QJSValue>
 
 #include "objects/flex/flexconfig.h"
 #include "third_party/yoga/Yoga.h"
@@ -45,14 +44,13 @@ class FlexNode : public QObject {
   private:
     YGNodeRef node;
     FlexConfig* config;
-    QLinkedList<FlexNode*> child;
   public:
     FlexNode(FlexConfig* config, QObject* parent = nullptr);
     virtual ~FlexNode();
     YGNodeRef getNode();
   public slots:
     /* child */
-    Q_INVOKABLE void appendChildren(QVariant node);
+    Q_INVOKABLE void appendChildren(QVariant children);
     /* flex */
     int getFlexGrow();
     int getFlexShrink();
@@ -141,6 +139,8 @@ class FlexNode : public QObject {
     int getLayoutHeight();
     Q_INVOKABLE void calculateLayoutRtl(int width, int height);
     Q_INVOKABLE void calculateLayoutLtr(int width, int height);
+  private:
+    static bool tryCast(QJSValue src, FlexNode*& dst);
 };
 
 /*****************************************************************************/

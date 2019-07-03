@@ -28,17 +28,23 @@ YGNodeRef FlexNode::getNode() {
 
 /*---------------------------------------------------------------------------*/
 
-void FlexNode::appendChildren(QVariant node) {
-    FlexNode* object = qvariant_cast<FlexNode*>(node);
+void FlexNode::appendChildren(QVariant children) {
+    QJSValue child = qvariant_cast<QJSValue>(children);
     std::vector<YGNodeRef> tmp;
-    if (object==nullptr) {
-        qCritical() << "FlexNode setChildren child not flexnode*";
+    if (child.isUndefined()) {
+        qCritical() << "FlexNode appendChildren child undefined";
+    } else if(!child.isArray()) {
+        qCritical() << "FlexNode appendChildren child is not array";
     } else {
-        child.append(object);
-        QLinkedList<FlexNode*>::iterator i;
-        for (i = child.begin(); i != child.end(); i++) {
-            FlexNode* it = (*i);
-            tmp.push_back(it->getNode());
+        const int length = child.property("length").toInt();
+        for (int i = 0; i != length; i++) {
+            FlexNode* node = nullptr;
+            if(!tryCast(child.property(i), node)) {
+                qCritical() << "FlexNode appendChildren child is not qobject";
+                return;
+            } else {
+                tmp.push_back(node->getNode());
+            }
         }
         YGNodeSetChildren(this->node,tmp);
     }
@@ -429,7 +435,7 @@ void FlexNode::setPaddingRight(int point) {
         node,
         YGEdgeRight,
         static_cast<float>(point)
-                );
+    );
 }
 
 /*---------------------------------------------------------------------------*/
@@ -458,6 +464,17 @@ void FlexNode::calculateLayoutLtr(int width, int height) {
         static_cast<float>(height),
         YGDirectionLTR
     );
+}
+
+/*---------------------------------------------------------------------------*/
+
+bool FlexNode::tryCast(QJSValue src, FlexNode*& dst) {
+    if(!src.isQObject()) {
+        return false;
+    } else {
+        dst = qobject_cast<FlexNode*>(src.toQObject());
+        return dst!=nullptr;
+    }
 }
 
 /*---------------------------------------------------------------------------*/
