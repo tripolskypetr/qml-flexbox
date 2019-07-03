@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>qml/main.qml</file>
         <file>qml/Flex.qml</file>
+        <file>qml/example.qml</file>
     </qresource>
 </RCC>

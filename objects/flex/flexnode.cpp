@@ -231,6 +231,8 @@ void FlexNode::setAlignContentSpaceBetween() {
     YGNodeStyleSetAlignContent(node, YGAlignSpaceBetween);
 }
 
+/*---------------------------------------------------------------------------*/
+
 void FlexNode::setAlignItemsAuto() {
     YGNodeStyleSetAlignItems(node, YGAlignAuto);
 }
@@ -244,7 +246,7 @@ void FlexNode::setAlignItemsCenter() {
 /*---------------------------------------------------------------------------*/
 
 void FlexNode::setAlignItemsFlexEnd() {
-    YGNodeStyleSetAlignItems(node, YGAlignCenter);
+    YGNodeStyleSetAlignItems(node, YGAlignFlexEnd);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -280,49 +282,49 @@ void FlexNode::setAlignItemsSpaceBetween() {
 /*---------------------------------------------------------------------------*/
 
 void FlexNode::setAlignSelfAuto() {
-    YGNodeStyleSetAlignItems(node, YGAlignAuto);
+    YGNodeStyleSetAlignSelf(node, YGAlignAuto);
 }
 
 /*---------------------------------------------------------------------------*/
 
 void FlexNode::setAlignSelfCenter() {
-    YGNodeStyleSetAlignItems(node, YGAlignCenter);
+    YGNodeStyleSetAlignSelf(node, YGAlignCenter);
 }
 
 /*---------------------------------------------------------------------------*/
 
 void FlexNode::setAlignSelfFlexEnd() {
-    YGNodeStyleSetAlignItems(node, YGAlignFlexEnd);
+    YGNodeStyleSetAlignSelf(node, YGAlignFlexEnd);
 }
 
 /*---------------------------------------------------------------------------*/
 
 void FlexNode::setAlignSelfStretch() {
-    YGNodeStyleSetAlignItems(node, YGAlignStretch);
+    YGNodeStyleSetAlignSelf(node, YGAlignStretch);
 }
 
 /*---------------------------------------------------------------------------*/
 
 void FlexNode::setAlignSelfBaseline() {
-    YGNodeStyleSetAlignItems(node, YGAlignBaseline);
+    YGNodeStyleSetAlignSelf(node, YGAlignBaseline);
 }
 
 /*---------------------------------------------------------------------------*/
 
 void FlexNode::setAlignSelfFlexStart() {
-    YGNodeStyleSetAlignItems(node, YGAlignFlexStart);
+    YGNodeStyleSetAlignSelf(node, YGAlignFlexStart);
 }
 
 /*---------------------------------------------------------------------------*/
 
 void FlexNode::setAlignSelfSpaceAround(){
-    YGNodeStyleSetAlignItems(node, YGAlignSpaceAround);
+    YGNodeStyleSetAlignSelf(node, YGAlignSpaceAround);
 }
 
 /*---------------------------------------------------------------------------*/
 
 void FlexNode::setAlignSelfSpaceBetween() {
-    YGNodeStyleSetAlignItems(node, YGAlignSpaceBetween);
+    YGNodeStyleSetAlignSelf(node, YGAlignSpaceBetween);
 }
 
 /*---------------------------------------------------------------------------*/

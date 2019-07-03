@@ -98,7 +98,7 @@ Item {
         } else if (align === "spaceAround") {
             node.setAlignContentSpaceAround();
         } else {
-            debugger;
+            throw "setAlignContent invalid param";
         }
     }
 
@@ -121,7 +121,7 @@ Item {
         } else if (align === "spaceAround") {
             node.setAlignItemsSpaceAround();
         } else {
-            debugger;
+            throw "setAlignItems invalid param";
         }
     }
 
@@ -144,7 +144,7 @@ Item {
         } else if (align === "spaceAround") {
             node.setAlignSelfSpaceAround();
         } else {
-            debugger;
+            throw "setAlignSelf invalid param";
         }
     }
 
@@ -155,7 +155,7 @@ Item {
         } else if (display==="none") {
             node.setDisplayNone();
         } else {
-            debugger;
+            throw "setDisplay invalid param";
         }
     }
 
@@ -174,7 +174,7 @@ Item {
         } else if (justify==="spaceBetween") {
             node.setJustifySpaceBetween();
         } else {
-            debugger;
+            throw "setJustifyContent invalid param";
         }
     }
 
@@ -187,7 +187,7 @@ Item {
         } else if (wrap==="wrapReverser") {
             node.setWrapReverser();
         } else {
-            debugger;
+            throw "setFlexWrap invalid param";
         }
     }
 
@@ -202,7 +202,7 @@ Item {
         } else if (direction==="columnReverse") {
             node.setFlexDirectionColumnReverse();
         } else {
-            debugger;
+            throw "setFlexDirection invalid param";
         }
     }
 

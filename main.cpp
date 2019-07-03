@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(
-        QStringLiteral("qrc:/qml/main.qml"))
+        QStringLiteral("qrc:/qml/example.qml"))
     );
 
     return app.exec();
